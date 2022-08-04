@@ -101,6 +101,26 @@ public class ArrowFlightJdbcDriverTest {
     assertEquals(count, 1);
   }
 
+  @Test
+  public void testDremio() throws Exception {
+    String sql = "select 'Hello, Dremio';";
+    String url = "jdbc:arrow-flight://localhost:32010";
+    java.util.Properties props = new java.util.Properties();
+    props.setProperty("useEncryption", "false");
+    props.setProperty("user", "dremio");
+    props.setProperty("password", "dremio123");
+    Connection con = DriverManager.getConnection(url, props);
+    java.sql.Statement stmt = con.createStatement();
+    boolean result = stmt.execute(sql);
+    assertEquals(result, true);
+    java.sql.ResultSet rs = stmt.getResultSet();
+    int count = 0;
+    while(rs.next()) {
+      count++;
+    }
+    assertEquals(count, 1);
+  }
+
   /**
    * Tests whether the {@link ArrowFlightJdbcDriver} is registered in the
    * {@link DriverManager}.

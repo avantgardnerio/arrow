@@ -383,14 +383,14 @@ public final class ArrowFlightSqlClientHandler implements AutoCloseable {
         if (config.username != null) {
           authFactory =
               new ClientIncomingAuthHeaderMiddleware.Factory(new ClientBearerHeaderHandler());
-          if(connections.isEmpty()) {
+//          if(connections.isEmpty()) {
             config.middlewareFactories.add(authFactory); // Only add once
-          }
+//          }
         }
         final FlightClient.Builder clientBuilder = FlightClient.builder().allocator(config.allocator);
-        if(connections.isEmpty()) {
+//        if(connections.isEmpty()) {
           config.middlewareFactories.add(new ClientCookieMiddleware.Factory()); // Only add once
-        }
+//        }
         config.middlewareFactories.forEach(clientBuilder::intercept);
         Location location;
         if (useEncryption) {
